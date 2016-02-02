@@ -7,7 +7,7 @@ export default class Posts extends Component {
         {this.props.posts.map((post, i) =>
             <li key={i}>{
               post.url && post.url.includes("imgur") ?
-                <img src={post.url} /> :
+                <img style={{"max-width" : "75%", "max-height": "device-height"}} src={post.url + ".jpg"} /> :
                 post.title
               }</li>
         )}

@@ -41,14 +41,14 @@ class App extends Component {
     const { selectedReddit, posts, isFetching, lastUpdated } = this.props
     return (
       <div>
-        <AppBar title="Material"
+        <AppBar title="The Puppy Space!"
                 showMenuIconButton={false}
                 />
         <Card>
           <CardText>
               <Picker value={selectedReddit}
                   onChange={this.handleChange}
-                  options={[ 'reactjs', 'frontend', 'puppies' ]} />
+                  options={[ 'puppies', 'dogpictures', 'lookatmydog', 'puppygifs', 'puppysmiles', 'awww' ]} />
               <p>
                 {lastUpdated &&
                   <span>

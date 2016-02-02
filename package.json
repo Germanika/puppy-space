@@ -1,9 +1,10 @@
 {
   "name": "puppy-aggregator",
-  "version": "0.0.0",
-  "description": "Redux async example",
+  "version": "0.0.1",
+  "description": "Uses some popular websites' APIs to show pictures of puppies.",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "set NODE_ENV=production && node node_modules/webpack/bin/webpack.js -p --colors --progress --config=./webpack.config.prod.js"
   },
   "repository": {
     "type": "git",
@@ -13,8 +14,8 @@
     "react",
     "reactjs",
     "webpack",
-		"puppy",
-		"puppies",
+    "puppy",
+    "puppies",
     "flux"
   ],
   "license": "MIT",
@@ -36,6 +37,7 @@
     "babel-plugin-react-transform": "^1.1.0",
     "expect": "^1.6.0",
     "express": "^4.13.3",
+    "html-webpack-plugin": "^2.7.2",
     "node-libs-browser": "^0.5.2",
     "react-transform-hmr": "^1.0.0",
     "webpack": "^1.9.11",

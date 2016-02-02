@@ -1,21 +1,24 @@
 var path = require('path')
 var webpack = require('webpack')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
   entry: [
-    'webpack-hot-middleware/client',
     './index'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, './dist'),
     filename: 'puppies.js',
-    publicPath: '/dist'
+    publicPath: '/'
   },
   plugins: [
+		new HtmlWebpackPlugin(
+		{ template: './index.html'
+		, inject: true
+		}),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+		// new webpack.optimize.UglifyJsPlugin(),
+		new webpack.DefinePlugin({ "process.env": { "NODE_ENV": '"production"' }})
   ],
   module: {
     loaders: [{
@@ -26,4 +29,3 @@ module.exports = {
     }]
   }
 }
-
