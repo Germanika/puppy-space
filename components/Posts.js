@@ -1,15 +1,22 @@
 import React, { PropTypes, Component } from 'react'
+import { Card, CardMedia, CardText } from 'material-ui'
 
 export default class Posts extends Component {
   render() {
     return (
       <ul>
         {this.props.posts.map((post, i) =>
-            <li key={i}>{
-              post.url && post.url.includes("imgur") ?
-                <img src={post.url} /> :
-                post.title
-              }</li>
+            {
+              return post.url && post.url.includes("imgur") ?
+               (<Card key={i} style={{"maxWidth":"50%"}}>
+                <CardText>
+                   <img style={{ "width": "100%"}}
+    									src={post.url + ".jpg"} />
+                  </CardText>
+                </Card>
+								) :
+								null
+						}
         )}
       </ul>
     )
