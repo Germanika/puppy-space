@@ -32,7 +32,9 @@ function posts(state = {
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
-        items: action.posts,
+        items: { ...state.items
+               , ...action.posts
+               },
         lastUpdated: action.receivedAt
       })
     default:
@@ -46,7 +48,7 @@ function postsByReddit(state = { }, action) {
     case RECEIVE_POSTS:
     case REQUEST_POSTS:
       return Object.assign({}, state, {
-        [action.reddit]: posts(state[action.reddit], action)
+        posts: ...posts(state[posts], action)
       })
     default:
       return state

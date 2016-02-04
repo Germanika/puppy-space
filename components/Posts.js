@@ -8,7 +8,7 @@ export default class Posts extends Component {
         {this.props.posts.map((post, i) =>
             {
               return post.url && post.url.includes("imgur") ?
-               (<Card key={i} style={{"maxWidth":"50%"}}>
+               (<Card key={i} style={{"maxWidth":"80%"}}>
                 <CardText>
                    <img style={{ "width": "100%"}}
     									src={post.url + ".jpg"} />
