@@ -4,7 +4,7 @@ export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const SELECT_REDDIT = 'SELECT_REDDIT'
 export const INVALIDATE_REDDIT = 'INVALIDATE_REDDIT'
-const imgur = { clientKey: "241264ba6ea98c2"
+const IMGUR = { clientKey: "241264ba6ea98c2"
               , rootUrl: "https://api.imgur.com/3/"
               }
 
@@ -38,10 +38,20 @@ function receivePosts(reddit, json) {
   }
 }
 
-function fetchPosts(reddit) {
+// options accepts before, after, count, and limit as parameters
+function fetchPosts(reddit, options) {
+
+  let params = ''
+  if (options) {
+    if (options.before) params.concat(`?before=${options.before}`)
+    if (options.after) params.concat(`?after=${options.after}`)
+    if (options.limit) params.concat(`?limit=${options.limit}`)
+    if (options.count) params.concat(`?count=${options.count}`)
+  }
+
   return dispatch => {
     dispatch(requestPosts(reddit))
-    return fetch(`https://www.reddit.com/r/${reddit}.json`)
+    return fetch( `https://www.reddit.com/r/${reddit}.json${params}`)
       .then(response => response.json())
       .then(json => dispatch(receivePosts(reddit, json)))
   }

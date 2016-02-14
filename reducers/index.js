@@ -4,7 +4,7 @@ import {
   REQUEST_POSTS, RECEIVE_POSTS
 } from '../actions'
 
-function selectedReddit(state = 'puppies', action) {
+function selectedReddit(state = 'dogpictures', action) {
   switch (action.type) {
     case SELECT_REDDIT:
       return action.reddit
@@ -32,9 +32,7 @@ function posts(state = {
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
-        items: { ...state.items
-               , ...action.posts
-               },
+        items: action.posts,
         lastUpdated: action.receivedAt
       })
     default:
@@ -48,7 +46,7 @@ function postsByReddit(state = { }, action) {
     case RECEIVE_POSTS:
     case REQUEST_POSTS:
       return Object.assign({}, state, {
-        posts: ...posts(state[posts], action)
+        [action.reddit]: posts(state[action.reddit], action)
       })
     default:
       return state
