@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { selectReddit, fetchPostsIfNeeded, invalidateReddit } from '../actions'
 import Picker from '../components/Picker'
 import Posts from '../components/Posts'
-import { Card, AppBar, CardText } from 'material-ui'
+import { Card, AppBar, CardText, RaisedButton } from 'material-ui'
 
 
 class App extends Component {
@@ -25,8 +25,8 @@ class App extends Component {
     }
   }
 
-  handleChange(nextReddit) {
-    this.props.dispatch(selectReddit(nextReddit))
+  handleChange(event, index, value) {
+    this.props.dispatch(selectReddit(value))
   }
 
   handleRefreshClick(e) {
@@ -46,11 +46,19 @@ class App extends Component {
     const isEmpty = posts.length === 0
     return (
       <div>
-        <AppBar title="The Puppy Space!"
-                showMenuIconButton={false}
-                />
         <Card>
           <CardText>
+        <AppBar title="The Puppy Space!"
+                style={{ background:'#FF4081'
+                       , height: 120
+                       , paddingTop: 24
+                       }}
+                showMenuIconButton={false}/>
+              <Card style={
+                { background:'#EEEEEE'
+                , margin: 10
+                }}>
+              <CardText>
               <Picker value={selectedReddit}
                   onChange={this.handleChange}
                   options={[ 'dogpictures'
@@ -60,9 +68,8 @@ class App extends Component {
                            , 'puppysmiles'
                            , 'awww'
                            ]} />
-              <p>
                 {lastUpdated &&
-                  <span>
+                  <span style={{ display:'inline-block', marginLeft:20 }}>
                     Last updated at {
                       new Date(lastUpdated).toLocaleTimeString()
                     }.
@@ -70,21 +77,39 @@ class App extends Component {
                   </span>
                 }
                 {!isFetching &&
-                  <a href="#"
-                     onClick={this.handleRefreshClick}>
-                    Refresh
-                  </a>
+                  <RaisedButton secondary={true}
+                                onTouchEnd={this.handleRefreshClickD}
+                                label='Refresh'
+                                style={
+                                  { marginLeft:20}
+                                }/>
                 }
-              </p>
+              </CardText>
+              </Card>
+              <Card>
               {isEmpty
                 ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
                 : (<div style={{ opacity: isFetching ? 0.5 : 1 }}>
                      <Posts posts={posts} />
                    </div>)
               }
+              </Card>
           </CardText>
         </Card>
-
+        <footer style={{ color: 'white'
+                       , background: '#212121'
+                       , width: '100%'
+                       , height: '120px'
+                       , position: 'absolute'
+                       , left: -4
+                       }}>
+          <p style={{ textAlign:'center'
+                    , paddingTop:'37px'
+                    , fontFamily:'verdana'
+                    }}>
+              {"For Emma. Enjoy the puppies! ♥"}
+            </p>
+        </footer>
       </div>
     )
   }

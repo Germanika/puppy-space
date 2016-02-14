@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { Card, CardMedia, CardText } from 'material-ui'
 
-const validUrlEndings = [ '.gif', '.gifv', '.jpg', '.png' ]
+const validUrlEndings = [ '.gif', '.jpg', '.png' ]
 
 const fixUrl = (url) => {
   let fixed = false
@@ -15,31 +15,45 @@ const fixUrl = (url) => {
 }
 
 const isFixable = (url) => {
-  const result = url.includes("imgur") &&
+  return url.includes("imgur") &&
                   !url.includes('/a/') &&
                   !url.includes('/gallery/')
-  if (!result) console.log(url)
-  return result
+}
+
+const fixGifvUrl = (url) => {
+  return url.replace('.gifv', '.webm')
 }
 
 export default class Posts extends Component {
   render() {
     return (
-      <ul>
-        {this.props.posts.map((post, i) =>
+        <div style={{ paddingTop:10, paddingBottom: 20, background:'#EEEEEE' }}>
+          {this.props.posts.map((post, i) =>
             {
               return isFixable(post.url) ?
-               (<Card key={i} style={{"maxWidth":"80%"}}>
+               (<Card key={i} style={
+                  { margin: 'auto'
+                  , marginTop: 10
+                  , maxWidth:768
+                  , position: 'relative'
+                  }
+                }>
                 <CardText>
-                   <img style={{ "width": "100%"}}
-    									src={fixUrl(post.url)} />
+                  { post.url.endsWith('.gifv')
+                    ? (<video width='100%' controls autoplay>
+                        <source type='video/webm' src={fixGifvUrl(post.url)}/>
+                        Your browser does not support the video tag.
+                      </video>)
+                    : <img style={{ "width": "100%"}}
+    									     src={fixUrl(post.url)} />
+                  }
                   </CardText>
                 </Card>
 								) :
 								null
 						}
         )}
-      </ul>
+      </div>
     )
   }
 }

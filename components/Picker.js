@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { SelectField, MenuItem } from 'material-ui'
 
 export default class Picker extends Component {
   render() {
@@ -6,14 +7,13 @@ export default class Picker extends Component {
 
     return (
       <span>
-        <select onChange={e => onChange(e.target.value)}
+        <SelectField onChange={onChange}
                 value={value}>
           {options.map(option =>
-            <option value={option} key={option}>
-              {option}
-            </option>)
+            <MenuItem value={option} key={option} primaryText={option} />
+            )
           }
-        </select>
+        </SelectField>
       </span>
     )
   }
