@@ -4,12 +4,13 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: [
-    './index'
+    './index',
+    'babel-polyfill'
   ],
   output: {
     path: path.join(__dirname, '../gh-puppies'),
     filename: 'puppies.js',
-    publicPath: '/'
+    publicPath: '/puppy-aggregator/'
   },
   plugins: [
 		new HtmlWebpackPlugin(
@@ -17,7 +18,7 @@ module.exports = {
 		, inject: true
 		}),
     new webpack.optimize.OccurenceOrderPlugin(),
-		// new webpack.optimize.UglifyJsPlugin(),
+		new webpack.optimize.UglifyJsPlugin(),
 		new webpack.DefinePlugin({ "process.env": { "NODE_ENV": '"production"' }})
   ],
   module: {
